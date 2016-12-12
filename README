@@ -1,0 +1,50 @@
+BUILD:
+
+	make 
+
+
+RUN
+
+	/path/to/mpirun $MPIRUN_options /path/to/io-bm.exe -n SIZE_IN_GB \
+		[-w | -r] [-b BUFFER_SIZE_IN_MB] [-d] -f /path/to/file/names.out \
+		[-s]
+
+where
+	-w tells io-bm to write.  You need to do this before you do a read
+	   test
+
+	-r tells io-bm to read.  Do this after a write test with the same 
+	   options
+
+	-d tells io-bm to use direct io. Cached IO is the default.
+
+	-b BUFFER_SIZE_IN_MB tells io-bm to use this integer as the buffer 
+	   size for IOs in MB.  
+
+	-n SIZE_IN_GB tells io-bm to use this integer as the total IO size 
+	   in GB.  This is evenly divided amongst the processes, which each 
+	   of the N processes generating SIZE_IN_GB/N GB of IO.
+
+	-f /path/to/file/names.out tells io-bm to use the string as a 
+	   template for the name of the output files, one per process,
+	   unless -s is specified.  
+
+	-s tells io-bm to use the same file for all processes, that is do
+	   io to a single file name as specified on the -f /path... argument.
+	   Each process will do a seek before doing its write or read.
+
+
+DEPENDENCIES
+
+This code requires these other systems and libraries:
+
+	operational C compiler
+	operational MPI infrastructure
+
+LICENSE:  GPL v2.0 only (c.f. http://www.gnu.org/licenses/gpl-2.0.html 
+for a copy if this fail is missing from the distribution.
+
+COPYRIGHT: 2002-2014 Scalable Informatics Inc.
+
+SUPPORT:  paid support and features available from Scalable Informatics 
+	  Inc.  Contact info@scalableinformatics.com for details
