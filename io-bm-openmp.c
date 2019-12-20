@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/utsname.h>
+#include <unistd.h>
 
 #include <string.h>
 #include <malloc.h>
@@ -39,6 +40,9 @@ struct timeval ti,tf,caliper[NUMBER_OF_CALIPER_POINTS],
                ttot[NUMBER_OF_CALIPER_POINTS];
 struct timezone tzi,tzf;
 void swap_arrays (void *array1, void *array2);
+
+
+
 
 int main(int argc, char **argv)
   {
@@ -106,12 +110,12 @@ int main(int argc, char **argv)
               	   break;
           case 'p':
                    p = (int)atoi((char *)optarg);
-                   // which disk index to start with for /data/INDEX
+                   // which disk index to start with for FILENAME/INDEX
                    if (debug) printf(" p=%i disk index start\n",(int)p);
               	   break;
           case 'h':
                    h = (int)atoi((char *)optarg);
-                   // highest disk index for /data/INDEX , after which we have to wrap
+                   // highest disk index for FILENAME/INDEX , after which we have to wrap
                    if (debug) printf(" h=%i disk index max\n",(int)h);
               	   break;
 
@@ -213,7 +217,7 @@ omp_set_num_threads(THR);
     fn			= (char *)calloc(1024,sizeof(char ));
     if (same_file == false)
        {
-         sprintf(fn,"%s/%i/%s.%i",top,tid,filename,tid);
+         sprintf(fn,"%s/%i/%s.%i",filename,tid,filename,tid);
 	       offset=0;
        }
       else
